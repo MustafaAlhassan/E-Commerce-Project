@@ -19,7 +19,7 @@ const validateJWT = (req: ExtendRequst, res: Response, next: NextFunction) => {
   }
   jwt.verify(
     token,
-    "]`,`%GPU$84#Y@3f*$HMkeEwNY->q!uB",
+    process.env.JWT_SECRET || "",
     async (err, payload) => {
       if (err) {
         res.status(403).send("Invaild token");
