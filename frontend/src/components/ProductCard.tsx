@@ -4,15 +4,17 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
 
 interface Props {
     _id: string, 
     title: string,
     image: string,
-    price: string
+    price: string, 
+    stock: string
 }
 
-export default function ProductCard({ title, image, price }: Props) {
+export default function ProductCard({ title, image, price, stock }: Props) {
   return (
     <Card>
       <CardMedia
@@ -24,8 +26,9 @@ export default function ProductCard({ title, image, price }: Props) {
         <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {price} IQD
+        <Typography variant="body2" sx={{ color: 'text.secondary', display: "flex", justifyContent: "space-between" }}>
+            <Box>{price} IQD</Box>
+            <Box>{stock}</Box>
         </Typography>
       </CardContent>
       <CardActions>
