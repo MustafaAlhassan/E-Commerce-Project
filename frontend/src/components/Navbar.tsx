@@ -26,7 +26,7 @@ function Navbar() {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
             <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "100%"}}>
             <Box sx={{display: "flex", flexDirection: "row", alignItems: "center"}}>
