@@ -27,7 +27,7 @@ export default function ProductCard({ title, image, price, stock }: Props) {
           {title}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', display: "flex", justifyContent: "space-between" }}>
-            <Box>{price} IQD</Box>
+            <Box>{price.toLocaleString()} IQD</Box>
             <Box>{stock}</Box>
         </Typography>
       </CardContent>
