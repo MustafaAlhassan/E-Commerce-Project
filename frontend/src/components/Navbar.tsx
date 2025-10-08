@@ -10,8 +10,9 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { ShoppingCart } from "@mui/icons-material";
 import { useAuth } from "../context/Auth/AuthContext";
-import { Button } from "@mui/material";
+import { Badge, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
@@ -31,13 +32,16 @@ function Navbar() {
   };
 
   const handleLogin = () => {
-    navigate("/login")
-  }
+    navigate("/login");
+  };
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate("/");
     handleCloseUserMenu();
+  };
+  const handleCart = () => {
+    navigate("/cart")
   }
 
   return (
@@ -75,43 +79,68 @@ function Navbar() {
                 Laptops High
               </Typography>
             </Box>
-            <Box sx={{ flexGrow: 0 }}>
-              {isAuthenticated ? <>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, gap: 1 }}>
-                  <Typography color="white">{username}</Typography>
-                  <Avatar
-                    alt={username || ""}
-                    src="/static/images/avatar/2.jpg"
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: "center" }}>
-                    My Orders
-                  </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  <Typography sx={{ textAlign: "center" }}>Logout</Typography>
-                </MenuItem>
-              </Menu>
-              </> : <Button variant="contained" sx={{backgroundColor:"#009688"}} onClick={handleLogin}>Login</Button>}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              gap={2}
+            >
+              <IconButton aria-label="cart" onClick={handleCart}>
+                <Badge badgeContent={4} color="secondary">
+                  <ShoppingCart sx={{color: "white"}}/>
+                </Badge>
+              </IconButton>
+              {isAuthenticated ? (
+                <>
+                  <Tooltip title="Open settings">
+                    <IconButton
+                      onClick={handleOpenUserMenu}
+                      sx={{ p: 0, gap: 1 }}
+                    >
+                      <Typography color="white">{username}</Typography>
+                      <Avatar
+                        alt={username || ""}
+                        src="/static/images/avatar/2.jpg"
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography sx={{ textAlign: "center" }}>
+                        My Orders
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                      <Typography sx={{ textAlign: "center" }}>
+                        Logout
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#009688" }}
+                  onClick={handleLogin}
+                >
+                  Login
+                </Button>
+              )}
             </Box>
           </Box>
         </Toolbar>
