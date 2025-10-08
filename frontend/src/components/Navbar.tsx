@@ -12,12 +12,15 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useAuth } from "../context/Auth/AuthContext";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const { username, isAuthenticated } = useAuth();
+  const { username, isAuthenticated, logout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -26,6 +29,16 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogin = () => {
+    navigate("/login")
+  }
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    handleCloseUserMenu();
+  }
 
   return (
     <AppBar position="static">
@@ -94,11 +107,11 @@ function Navbar() {
                     My Orders
                   </Typography>
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
+                <MenuItem onClick={handleLogout}>
                   <Typography sx={{ textAlign: "center" }}>Logout</Typography>
                 </MenuItem>
               </Menu>
-              </> : <Button variant="contained" sx={{backgroundColor:"#009688"}}>Login</Button>}
+              </> : <Button variant="contained" sx={{backgroundColor:"#009688"}} onClick={handleLogin}>Login</Button>}
             </Box>
           </Box>
         </Toolbar>
