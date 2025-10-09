@@ -14,12 +14,21 @@ const createCartForUser = async ({ userId }: CreateCartForUser) => {
 
 interface GetActiveCartForUser {
   userId: string;
+  populateProduct?: boolean; //Optional
 }
 
 export const getActiveCartForUser = async ({
   userId,
+  populateProduct,
 }: GetActiveCartForUser) => {
-  let cart = await cartModel.findOne({ userId, status: "active" });
+  let cart;
+  if (populateProduct) {
+    cart = await cartModel
+      .findOne({ userId, status: "active" })
+      .populate("items.product");
+  } else {
+    cart = await cartModel.findOne({ userId, status: "active" });
+  }
   if (!cart) {
     cart = await createCartForUser({ userId });
   }
@@ -80,9 +89,9 @@ export const addItemToCart = async ({
 
     //Update totalAmount of the cart
     cart.totalAmount += product.price * quantity;
+    await cart.save();
 
-    const updatedCart = await cart.save();
-    return { data: updatedCart, statusCode: 201 };
+    return { data: await getActiveCartForUser({ userId, populateProduct: true}), statusCode: 201 };
   } catch {
     return { data: "Something Wrong in Add Item", statusCode: 500 };
   }
@@ -127,9 +136,9 @@ export const updateItemInCart = async ({
     existsInCart.quantity = quantity;
     total += existsInCart.quantity * existsInCart.unitPrice;
     cart.totalAmount = total;
+    await cart.save();
 
-    const updatedCart = await cart.save();
-    return { data: updatedCart, statusCode: 201 };
+    return { data: await getActiveCartForUser({userId, populateProduct: true}), statusCode: 201 };
   } catch {
     return { data: "Something Wrong in Update Item", statusCode: 500 };
   }
@@ -161,9 +170,9 @@ export const deleteItemInCart = async ({
 
     cart.items = otherCartItems;
     cart.totalAmount = total;
-
-    const updatedCart = await cart.save();
-    return { data: updatedCart, statusCode: 201 };
+    await cart.save();
+    
+    return { data: await getActiveCartForUser({userId, populateProduct: true}), statusCode: 201 };
   } catch {
     return { data: "Something Wrong in Delete Item", statusCode: 500 };
   }

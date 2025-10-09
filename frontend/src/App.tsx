@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import RegisterPage from "./pages/RegisterPage";
 import AuthProvide from "./context/Auth/AuthProvider";
 import LoginPage from "./pages/LoginPage";
-import CartPage from "./pages/Cartpage";
+import CartPage from "./pages/CartPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CartProvide from "./context/Cart/CartProvider";
 
