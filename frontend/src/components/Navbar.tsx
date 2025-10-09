@@ -14,8 +14,10 @@ import { ShoppingCart } from "@mui/icons-material";
 import { useAuth } from "../context/Auth/AuthContext";
 import { Badge, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/Cart/CartContext";
 
 function Navbar() {
+  const { cartItems } = useCart();
   const { username, isAuthenticated, logout } = useAuth();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -41,8 +43,8 @@ function Navbar() {
     handleCloseUserMenu();
   };
   const handleCart = () => {
-    navigate("/cart")
-  }
+    navigate("/cart");
+  };
 
   return (
     <AppBar position="static">
@@ -64,20 +66,21 @@ function Navbar() {
                 alignItems: "center",
               }}
             >
-              <AdbIcon sx={{ display: "flex", mr: 1 }} />
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                }}
-              >
-                Laptops High
-              </Typography>
+              <Button variant="text" sx={{color:"#fff"}} onClick={() => navigate('/')}>
+                <AdbIcon sx={{ display: "flex", mr: 1 }} />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  sx={{
+                    mr: 2,
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                  }}
+                >
+                  Laptops High
+                </Typography>
+              </Button>
             </Box>
             <Box
               display="flex"
@@ -86,8 +89,8 @@ function Navbar() {
               gap={2}
             >
               <IconButton aria-label="cart" onClick={handleCart}>
-                <Badge badgeContent={4} color="secondary">
-                  <ShoppingCart sx={{color: "white"}}/>
+                <Badge badgeContent={cartItems.length} color="secondary">
+                  <ShoppingCart sx={{ color: "white" }} />
                 </Badge>
               </IconButton>
               {isAuthenticated ? (
