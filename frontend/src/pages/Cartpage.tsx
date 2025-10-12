@@ -1,5 +1,6 @@
 import { Box, Button, ButtonGroup, Container, Typography } from "@mui/material";
 import { useCart } from "../context/Cart/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const {
@@ -10,6 +11,8 @@ const CartPage = () => {
     clearCart,
   } = useCart();
 
+  const navigate = useNavigate();
+
   const handleQuantity = (productId: string, quantity: number) => {
     if (quantity <= 0) {
       return;
@@ -19,6 +22,9 @@ const CartPage = () => {
   const handleRemoveItem = (productId: string) => {
     removeItemInCart(productId);
   };
+  const handleCheckout = () => {
+    navigate("/checkout")
+  }
 
   const renderCartItem = () => (
       <Box display="flex" flexDirection="column" gap={2} mt={2}>
@@ -68,10 +74,11 @@ const CartPage = () => {
             </ButtonGroup>
           </Box>
         ))}
-        <Box>
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Typography variant="h5">
             Total Amount: {totalAmount.toLocaleString()} IQD
           </Typography>
+          <Button variant="contained" onClick={handleCheckout}>Go To Checkout</Button>
         </Box>
       </Box>)
 
