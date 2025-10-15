@@ -34,12 +34,15 @@ function Navbar() {
   };
 
   const handleMyOrders = () => {
-    navigate("/my-orders")
+    navigate("/my-orders");
     handleCloseUserMenu();
-  }
+  };
 
   const handleLogin = () => {
     navigate("/login");
+  };
+  const handleRegister = () => {
+    navigate("/Register");
   };
 
   const handleLogout = () => {
@@ -71,7 +74,11 @@ function Navbar() {
                 alignItems: "center",
               }}
             >
-              <Button variant="text" sx={{color:"#fff"}} onClick={() => navigate('/')}>
+              <Button
+                variant="text"
+                sx={{ color: "#fff" }}
+                onClick={() => navigate("/")}
+              >
                 <AdbIcon sx={{ display: "flex", mr: 1 }} />
                 <Typography
                   variant="h6"
@@ -141,13 +148,22 @@ function Navbar() {
                   </Menu>
                 </>
               ) : (
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#009688" }}
-                  onClick={handleLogin}
-                >
-                  Login
-                </Button>
+                <>
+                  <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#009688" }}
+                    onClick={handleLogin}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#009637ff" }}
+                    onClick={handleRegister}
+                  >
+                    Register
+                  </Button>
+                </>
               )}
             </Box>
           </Box>
